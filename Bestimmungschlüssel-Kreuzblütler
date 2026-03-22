@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Interaktiver Bestimmungsschlüssel</title>
+  <style>
+    body { font-family: Arial, sans-serif; text-align: center; background: #f4f8f4; }
+    .container { margin-top: 50px; }
+    button {
+      margin: 10px;
+      padding: 15px 25px;
+      font-size: 16px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      background-color: #6bbf59;
+      color: white;
+    }
+    button:hover { background-color: #4da63c; }
+    img { margin-top: 20px; max-width: 300px; border-radius: 10px; }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>🌼 Bestimme die Pflanze</h1>
+  <p id="question">Die Blüte hat wie viele Kronblätter?</p>
+
+  <div id="answers">
+    <button onclick="nextStep('q2')">4</button>
+    <button onclick="nextStep('q3')">5</button>
+  </div>
+
+  <div id="result"></div>
+</div>
+
+<script>
+function nextStep(step) {
+  const question = document.getElementById('question');
+  const answers = document.getElementById('answers');
+  const result = document.getElementById('result');
+
+  result.innerHTML = '';
+
+  if (step === 'q2') {
+    question.innerText = 'Welche Farbe haben die Kronblätter?';
+    answers.innerHTML = `
+      <button onclick="showResult('Raps','raps.jpg')">Gelb</button>
+      <button onclick="showResult('Gewöhnliches Hirtentäschel','hirtentaeschel.jpg')">Weiß</button>
+    `;
+  }
+  else if (step === 'q3') {
+    question.innerText = 'Kannst du die Kelchblätter gut erkennen?';
+    answers.innerHTML = `
+      <button onclick="nextStep('q4')">Ja</button>
+      <button onclick="showResult('Scharfer Hahnenfuß','hahnenfuss.jpg')">Nein</button>
+    `;
+  }
+  else if (step === 'q4') {
+    question.innerText = 'Welche Farbe haben die Blüten?';
+    answers.innerHTML = `
+      <button onclick="showResult('Erdbeere','erdbeere.jpg')">Weiß</button>
+      <button onclick="showResult('Echte Nelkenwurz','nelkenwurz.jpg')">Gelblich/Grünlich</button>
+    `;
+  }
+}
+
+function showResult(name, image) {
+  document.getElementById('question').innerText = 'Ergebnis:';
+  document.getElementById('answers').innerHTML = '';
+  document.getElementById('result').innerHTML = `
+    <h2>${name}</h2>
+    <p>Vergleiche mit dem Bild:</p>
+    <img src="${image}" alt="${name}">
+    <br><br>
+    <button onclick="location.reload()">Neu starten</button>
+  `;
+}
+</script>
+
+</body>
+</html>
